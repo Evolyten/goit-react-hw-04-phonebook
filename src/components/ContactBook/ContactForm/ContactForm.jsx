@@ -26,6 +26,7 @@ const validationSchema = Yup.object().shape({
       'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
     ),
 });
+
 export const ContactForm = ({ onSubmitForm }) => {
   const handleSubmit = (values, { resetForm }) => {
     onSubmitForm(values);

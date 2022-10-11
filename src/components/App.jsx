@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import toast, { Toaster } from 'react-hot-toast';
-import { ContactForm } from './ContactBook/ContactForm/ContactForm';
+import ContactForm from './ContactBook/ContactForm/ContactForm';
 import ContactList from './ContactBook/ContactList/ContactList';
 import Filter from './ContactBook/Filter/Filter';
 import css from './ContactBook/ContactBook.module.css';
-import { Section } from './ContactBook/Section/Section';
+import Section from './ContactBook/Section/Section';
 
 const USER_KEY = 'reader_item_contacts';
 
@@ -22,12 +22,9 @@ export default function App() {
   const addContact = userData => {
     if (contacts.some(formData => formData.name === userData.name)) {
       toast.error(`${userData.name} is already in contacts`);
-    } else {
-      userData.id = nanoid(5);
-      setContacts(prevState => {
-        return [...prevState, userData];
-      });
+      return;
     }
+    setContacts(prevState => [...prevState, { ...userData, id: nanoid(5) }]);
   };
 
   const handleChangeFilter = e => {
@@ -54,14 +51,8 @@ export default function App() {
 
       <Section title="Contacts">
         <Filter filteredUsers={handleChangeFilter} />
-        {contacts.length > 0 ? (
-          filter ? (
-            <ContactList users={filterUsers()} onDeleteUser={deleteUser} />
-          ) : (
-            <ContactList users={contacts} onDeleteUser={deleteUser} />
-          )
-        ) : (
-          <></>
+        {!!contacts.length && (
+          <ContactList users={filterUsers()} onDeleteUser={deleteUser} />
         )}
       </Section>
       <Toaster position="top-right" reverseOrder={true} />

@@ -1,7 +1,7 @@
 import css from '../ContactList/ContactList.module.css';
 import PropTypes from 'prop-types';
 
-export function ContactListItem({ user, deleteUser }) {
+export default function ContactListItem({ user, deleteUser }) {
   const { id, name, number } = user;
   return (
     <li className={css.user_item}>
